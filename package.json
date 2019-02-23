@@ -1,0 +1,38 @@
+{
+  "name": "react-native-clipped",
+  "version": "0.1.0",
+  "description": "Clipping effects and animations for react-native  🍠🥒🍕",
+  "author": "IjzerenHein <hrutjes@gmail.com>",
+  "keywords": [
+    "react-native-clipped",
+    "react-native",
+    "clip",
+    "clipped",
+    "clippable"
+  ],
+  "repository": "https://github.com/IjzerenHein/react-native-clipped",
+  "bugs": "https://github.com/IjzerenHein/react-native-clipped",
+  "license": "MIT",
+  "main": "src/index.js",
+  "react-native": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint ./src",
+    "flow": "./node_modules/.bin/flow ."
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "eslint-config-universe": "^1.0.7",
+    "eslint-plugin-react": "^7.12.4",
+    "flow-bin": "^0.86.0",
+    "prettier": "^1.15.3",
+    "react-native": "^0.58.5"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  }
+}
