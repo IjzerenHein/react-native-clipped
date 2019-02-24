@@ -1,13 +1,13 @@
 // @flow
 import React from 'react';
-import { View, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import { Router, Scene, Tabs } from 'react-native-router-flux';
 import { Ionicons } from '@expo/vector-icons';
-import { StoreProvider, storeObserver } from './store';
-import { DebugButton } from './components';
-// import TransitionScreen from "./transition/TransitionScreen";
-// import ViewScreen from "./transition/ViewScreen";
+import { StoreProvider } from './store';
+import { DebugButton, RunButton } from './components';
 import { OtherScreen } from './other';
+import { ViewScreen } from './view';
+import { TransitionScreen } from './transition';
 // import ExplorerScreen from "./explorer/ExplorerScreen";
 
 const TabBarIcon = (props: { name: string, tintColor: string }) => (
@@ -27,28 +27,31 @@ const App = () => (
   <StoreProvider>
     <Router>
       <Tabs>
-        {/*<Scene
-        key="transition"
-        component={TransitionScreen}
-        title="Transition"
-        tabBarLabel="Transition"
-        icon={TransitioIcon}
-        renderRightButton={() => <DebugButton />}
-      />
-      <Scene
-        key="view"
-        component={ViewScreen}
-        title="View"
-        tabBarLabel="View"
-        icon={ViewIcon}
-        renderRightButton={() => <DebugButton />}
-      />*/}
+        <Scene
+          key="view"
+          component={ViewScreen}
+          title="View"
+          tabBarLabel="View"
+          icon={ViewIcon}
+          renderLeftButton={() => <RunButton />}
+          renderRightButton={() => <DebugButton />}
+        />
+        <Scene
+          key="transition"
+          component={TransitionScreen}
+          title="Transition"
+          tabBarLabel="Transition"
+          icon={TransitionIcon}
+          renderLeftButton={() => <RunButton />}
+          renderRightButton={() => <DebugButton />}
+        />
         <Scene
           key="other"
           component={OtherScreen}
           title="Other"
           tabBarLabel="Other"
           icon={OtherIcon}
+          renderLeftButton={() => <RunButton />}
           renderRightButton={() => <DebugButton />}
         />
         {/*<Scene

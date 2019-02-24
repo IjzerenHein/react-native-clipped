@@ -2,19 +2,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { observable } from 'mobx';
-// @flow
 import { inject, observer, Provider } from 'mobx-react';
 
 export class Store {
   constructor() {
     this._debug = observable.box(false);
+    this._runId = observable.box(0);
   }
 
-  get debug() {
+  get debug(): boolean {
     return this._debug.get();
   }
-  set debug(val) {
+  set debug(val: boolean) {
     this._debug.set(val);
+  }
+
+  get runId(): number {
+    return this._runId.get();
+  }
+  set runId(val: number) {
+    this._runId.set(val);
   }
 }
 

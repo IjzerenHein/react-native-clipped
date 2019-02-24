@@ -15,7 +15,8 @@
     "randomcolor": "^0.5.3",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-clippable": "file:.yalc/react-native-clippable"
+    "react-native-clippable": "file:.yalc/react-native-clippable",
+    "react-native-router-flux": "^4.0.6"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
