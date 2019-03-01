@@ -17,8 +17,6 @@ export type ClippedTransitionProps = {
   onTransitionEnd?: () => void,
   // Debug props
   debug?: boolean,
-  width?: number,
-  height?: number,
 };
 
 type StateType = {
@@ -32,8 +30,8 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
   constructor(props: ClippedTransitionProps) {
     super(props);
     this.state = {
-      width: props.width,
-      height: props.height,
+      width: undefined,
+      height: undefined,
       child: React.Children.only(props.children),
       prevChildren: [],
     };
@@ -41,15 +39,6 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
 
   static getDerivedStateFromProps(props: ClippedTransitionProps, state: StateType) {
     let newState: any = null;
-
-    if (props.width !== undefined && props.height !== undefined) {
-      if (state.width !== props.width || state.height !== props.height) {
-        newState = {
-          width: props.width,
-          height: props.height,
-        };
-      }
-    }
 
     const child = React.Children.only(props.children);
 
@@ -79,9 +68,6 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
       easing, // eslint-disable-line
       useNativeDriver, // eslint-disable-line
       onTransitionEnd, // eslint-disable-line
-      // Optimisation props
-      width: propsWidth, // eslint-disable-line
-      height: propsHeight, // eslint-disable-line
       // Debug props
       debug,
       ...otherProps

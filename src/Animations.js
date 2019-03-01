@@ -21,8 +21,8 @@ export type ClippedAnimationType =
   | 'slideOutDown';
 
 export const ClippedAnimations = {
-  slideInLeft: [{ translateX: [-1, 0] }],
-  slideInRight: [{ translateX: [1, 0] }],
+  slideInLeft: [{ translateX: [1, 0] }],
+  slideInRight: [{ translateX: [-1, 0] }],
   slideInUp: [{ translateY: [1, 0] }],
   slideInDown: [{ translateY: [-1, 0] }],
   slideOutLeft: [{ exit: true, translateX: [0, -1] }],

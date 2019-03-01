@@ -29,10 +29,6 @@ export type ClippedViewProps = {
   useNativeDriver?: boolean,
   onAnimationEnd?: () => void,
 
-  // Optimisation props
-  width?: number,
-  height?: number,
-
   // Debug props
   debug?: boolean,
 };
@@ -58,27 +54,21 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       animation: undefined,
       animValue: undefined,
       anim: undefined,
-      width: props.width,
-      height: props.height,
+      width: undefined,
+      height: undefined,
     };
   }
 
   static getDerivedStateFromProps(props: ClippedViewProps, state: StateType) {
     let newState: any = null;
     if (state.width === undefined || state.height === undefined) {
-      if (props.width !== undefined && props.height !== undefined) {
-        newState = {
-          width: props.width,
-          height: props.height,
-        };
-      } else {
-        return null;
-      }
+      return null;
     }
 
     if (!state.anim && props.animation) {
       newState = newState || {};
       const { duration, delay, easing, useNativeDriver } = props;
+      newState.animation = props.animation;
       newState.animValue = new Animated.Value(0);
       newState.anim = Animated.timing(newState.animValue, {
         toValue: 1,
@@ -90,8 +80,23 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       newState.anim.start(props.onAnimationEnd);
     } else if (state.anim && !props.animation) {
       newState = newState || {};
+      newState.animation = undefined;
       newState.anim = undefined;
       newState.animValue = undefined;
+    } else if (state.animation && props.animation && state.animation !== props.animation) {
+      newState = newState || {};
+      const { duration, delay, easing, useNativeDriver } = props;
+      newState.animation = props.animation;
+      const animValue = new Animated.Value(0);
+      newState.animValue = Animated.add(Animated.subtract(state.animValue || 0, 1), animValue);
+      newState.anim = Animated.timing(animValue, {
+        toValue: 1,
+        duration,
+        delay,
+        easing,
+        useNativeDriver,
+      });
+      newState.anim.start(props.onAnimationEnd);
     }
 
     return newState;
@@ -304,26 +309,16 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       easing, // eslint-disable-line
       useNativeDriver, // eslint-disable-line
       onAnimationEnd, // eslint-disable-line
-      // Optimisation props
-      width: propsWidth, // eslint-disable-line
-      height: propsHeight, // eslint-disable-line
       // Debug props
       debug,
       ...otherProps
     } = this.props;
     const { width, height, anim } = this.state;
     return (
-      <View
-        style={style}
-        onLayout={propsWidth || propsHeight ? undefined : this.onLayout}
-        {...otherProps}>
-        {propsWidth || propsHeight ? (
-          undefined
-        ) : (
-          <View style={{ opacity: 0 }} collapsable={false}>
-            {children}
-          </View>
-        )}
+      <View style={style} onLayout={this.onLayout} {...otherProps}>
+        <View style={{ opacity: 0 }} collapsable={false}>
+          {children}
+        </View>
         {!anim && debug && width && height ? this.renderFragments(width, height, debug) : undefined}
         {!anim && width && height ? this.renderFragments(width, height) : undefined}
         {anim && debug && width && height ? this.renderAnimation(width, height, debug) : undefined}
