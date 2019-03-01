@@ -15,19 +15,3 @@ export type ClippedAnimationProps = {
   height?: number,
   debug?: boolean,
 };
-
-export type ClippedViewProps = {
-  style?: View.propTypes.style,
-  children: any,
-  left?: number,
-  right?: number,
-  top?: number,
-  bottom?: number,
-  leftRotate?: number,
-  rightRotate?: number,
-  bottomRotate?: number,
-  topRotate?: number,
-  width?: number,
-  height?: number,
-  debug?: boolean,
-};

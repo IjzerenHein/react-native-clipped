@@ -6,8 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StoreProvider } from './store';
 import { DebugButton, RunButton } from './components';
 import { OtherScreen } from './other';
-import { ViewScreen, ViewExplorerScreen } from './view';
-import { AnimationScreen } from './animation';
+import { ViewExamplesScreen, ViewExplorerScreen, ViewAnimationsScreen } from './view';
 import { TransitionScreen } from './transition';
 // import ExplorerScreen from "./explorer/ExplorerScreen";
 
@@ -35,23 +34,21 @@ const App = () => (
           title="View Explorer"
           tabBarLabel="Explorer"
           icon={ExplorerIcon}
-          renderLeftButton={() => <RunButton />}
           renderRightButton={() => <DebugButton />}
         />
         <Scene
-          key="view"
-          component={ViewScreen}
-          title="View"
+          key="viewExamples"
+          component={ViewExamplesScreen}
+          title="View Examples"
           tabBarLabel="View"
           icon={ViewIcon}
-          renderLeftButton={() => <RunButton />}
           renderRightButton={() => <DebugButton />}
         />
         <Scene
-          key="animation"
-          component={AnimationScreen}
-          title="Animation"
-          tabBarLabel="Animation"
+          key="viewAnimations"
+          component={ViewAnimationsScreen}
+          title="Animations"
+          tabBarLabel="Animations"
           icon={AnimationIcon}
           renderLeftButton={() => <RunButton />}
           renderRightButton={() => <DebugButton />}

@@ -1,3 +1,4 @@
 // @flow
-export * from './ViewScreen';
+export * from './ViewExamplesScreen';
 export * from './ViewExplorerScreen';
+export * from './ViewAnimationsScreen';

@@ -16,15 +16,10 @@ type PropsType = {
 };
 
 const VIEWS = {
-  /*Rotate: {
-    rotate: 0.09,
-  },*/
   Left: {
-    left: 0.1,
-    leftRotate: 0.2,
-    debug: true,
+    left: 0.5,
   },
-  /*Right: {
+  Right: {
     right: 0.5,
   },
   Top: {
@@ -40,13 +35,13 @@ const VIEWS = {
   TopBottom: {
     top: 0.25,
     bottom: 0.25,
-  },*/
+  },
 };
 
-const COLORS = ['cyan', 'azure', 'red', 'aero', 'aqua'];
+const CONTENTS = ['cyan', 'azure', 'red', 'aero', 'aqua'];
 
-export const ViewScreen = storeObserver(
-  class ViewScreen extends Component<PropsType> {
+export const ViewExamplesScreen = storeObserver(
+  class ViewExamplesScreen extends Component<PropsType> {
     render() {
       const { store } = this.props;
       return (
@@ -54,7 +49,7 @@ export const ViewScreen = storeObserver(
           <ScrollView style={styles.container}>
             {Object.keys(VIEWS).map((name, index) => (
               <Clipped.View key={`${store.runId}.${index}`} {...VIEWS[name]}>
-                <Example label={name} color={COLORS[index % COLORS.length]} />
+                <Example label={name} content={CONTENTS[index % CONTENTS.length]} />
               </Clipped.View>
             ))}
           </ScrollView>
