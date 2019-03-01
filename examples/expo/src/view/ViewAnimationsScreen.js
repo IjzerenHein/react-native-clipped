@@ -46,7 +46,10 @@ export const ViewAnimationsScreen = storeObserver(
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.container}>
             {ANIMATIONS.map((animation, index) => (
-              <Clipped.View key={`${store.runId}.${index}`} animation={animation}>
+              <Clipped.View
+                key={`${store.runId}.${index}`}
+                animation={animation}
+                debug={store.debug}>
                 <Example label={animation} content={CONTENTS[index % CONTENTS.length]} />
               </Clipped.View>
             ))}

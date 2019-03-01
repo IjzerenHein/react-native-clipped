@@ -48,7 +48,7 @@ export const ViewExamplesScreen = storeObserver(
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.container}>
             {Object.keys(VIEWS).map((name, index) => (
-              <Clipped.View key={`${store.runId}.${index}`} {...VIEWS[name]}>
+              <Clipped.View key={`${store.runId}.${index}`} {...VIEWS[name]} debug={store.debug}>
                 <Example label={name} content={CONTENTS[index % CONTENTS.length]} />
               </Clipped.View>
             ))}

@@ -7,8 +7,7 @@ import { StoreProvider } from './store';
 import { DebugButton, RunButton } from './components';
 import { OtherScreen } from './other';
 import { ViewExamplesScreen, ViewExplorerScreen, ViewAnimationsScreen } from './view';
-import { TransitionScreen } from './transition';
-// import ExplorerScreen from "./explorer/ExplorerScreen";
+import { TransitionsScreen } from './transition';
 
 const TabBarIcon = (props: { name: string, tintColor: string }) => (
   <Ionicons
@@ -55,9 +54,9 @@ const App = () => (
         />
         <Scene
           key="transition"
-          component={TransitionScreen}
-          title="Transition"
-          tabBarLabel="Transition"
+          component={TransitionsScreen}
+          title="Transitions"
+          tabBarLabel="Transitions"
           icon={TransitionIcon}
           renderLeftButton={() => <RunButton />}
           renderRightButton={() => <DebugButton />}

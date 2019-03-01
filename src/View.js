@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, Animated } from 'react-native';
 import { ClippedFragment } from './Fragment';
 import { resolveAnimation, isExitAnimation } from './Animations';
+import type { ClippedAnimationType } from './Animations';
 
 export type ClippedViewProps = {
   style?: View.propTypes.style,
@@ -19,13 +20,14 @@ export type ClippedViewProps = {
   topRotate?: number,
 
   // Animation props
-  animation?: string,
+  animation?: ClippedAnimationType,
   // move: boolean,
   //fade: boolean,
   duration?: number,
   delay?: number,
   easing?: (t: number) => number,
   useNativeDriver?: boolean,
+  onAnimationEnd?: () => void,
 
   // Optimisation props
   width?: number,
@@ -36,6 +38,7 @@ export type ClippedViewProps = {
 };
 
 type StateType = {
+  animation?: ClippedAnimationType,
   animValue?: Animated.Value,
   anim: any,
   width: ?number,
@@ -52,6 +55,7 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
   constructor(props: ClippedViewProps) {
     super(props);
     this.state = {
+      animation: undefined,
       animValue: undefined,
       anim: undefined,
       width: props.width,
@@ -83,7 +87,7 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
         easing,
         useNativeDriver,
       });
-      newState.anim.start();
+      newState.anim.start(props.onAnimationEnd);
     } else if (state.anim && !props.animation) {
       newState = newState || {};
       newState.anim = undefined;
@@ -228,6 +232,7 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     return animation.map((anim, idx) => {
       const vals: any = {
         //move: this.props.move,
+        debug,
         left: 0,
         top: 0,
         width,
@@ -298,6 +303,7 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       delay, // eslint-disable-line
       easing, // eslint-disable-line
       useNativeDriver, // eslint-disable-line
+      onAnimationEnd, // eslint-disable-line
       // Optimisation props
       width: propsWidth, // eslint-disable-line
       height: propsHeight, // eslint-disable-line

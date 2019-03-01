@@ -10,6 +10,16 @@ function arc2(animValue: any): any {
   return Animated.subtract(1, Animated.multiply(sub, sub));
 }*/
 
+export type ClippedAnimationType =
+  | 'slideInLeft'
+  | 'slideInRight'
+  | 'slideInUp'
+  | 'slideInDown'
+  | 'slideOutLeft'
+  | 'slideOutRight'
+  | 'slideOutUp'
+  | 'slideOutDown';
+
 export const ClippedAnimations = {
   slideInLeft: [{ translateX: [-1, 0] }],
   slideInRight: [{ translateX: [1, 0] }],
