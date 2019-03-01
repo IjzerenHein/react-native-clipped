@@ -9,7 +9,9 @@ export const RunButton = storeObserver((props: { store: Store }) => {
     <FlatButton
       style={{ marginLeft: 8 }}
       label="Re-Run"
-      onPress={() => (store.runId = store.runId + 1)}
+      onPress={() => {
+        store.runId = store.runId + 1;
+      }}
     />
   );
 });

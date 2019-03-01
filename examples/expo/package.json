@@ -1,7 +1,8 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "expo": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
@@ -15,7 +16,8 @@
     "randomcolor": "^0.5.3",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-clippable": "file:.yalc/react-native-clippable",
+    "react-native-actionsheet": "^2.4.2",
+    "react-native-clipped": "file:.yalc/react-native-clipped",
     "react-native-router-flux": "^4.0.6"
   },
   "devDependencies": {

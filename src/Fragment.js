@@ -8,6 +8,7 @@ type PropsType = {
   width: number,
   height: number,
   move?: boolean,
+  debug?: boolean,
   originalWidth?: number,
   originalHeight?: number,
   left?: number,
@@ -16,6 +17,7 @@ type PropsType = {
   translateY?: any,
   scaleX?: any,
   scaleY?: any,
+  rotateZ?: any,
   rotateX?: any,
   rotateY?: any,
   opacity?: any,
@@ -28,6 +30,7 @@ export const ClippedFragment = (props: PropsType) => {
   const {
     children,
     move = false,
+    debug = false,
     width,
     height,
     originalWidth,
@@ -38,6 +41,7 @@ export const ClippedFragment = (props: PropsType) => {
     translateY,
     scaleX,
     scaleY,
+    rotateZ,
     rotateX,
     rotateY,
     opacity,
@@ -54,7 +58,7 @@ export const ClippedFragment = (props: PropsType) => {
     overflow: 'hidden',
     transform: [],
   };
-  const innerStyle = {
+  const innerStyle: any = {
     position: 'absolute',
     left: -left,
     top: -top,
@@ -64,6 +68,9 @@ export const ClippedFragment = (props: PropsType) => {
   };
   if (perspective) {
     outerStyle.transform.push({ perspective });
+  }
+  if (rotateZ !== undefined) {
+    innerStyle.transform.push({ rotateZ: `-${rotateZ}`.replace('--', '') });
   }
   if (translateX !== undefined) {
     outerStyle.transform.push({ translateX });
@@ -89,6 +96,23 @@ export const ClippedFragment = (props: PropsType) => {
     outerStyle.transform.push({ rotateY });
     outerStyle.backfaceVisibility = 'hidden';
   }
+  if (rotateZ !== undefined) {
+    outerStyle.transform.push({ rotateZ });
+  }
+
+  if (debug) {
+    outerStyle.overflow = 'visible';
+    outerStyle.backgroundColor = 'rgba(0, 0, 255, 0.1)';
+    outerStyle.borderColor = 'royalblue';
+    outerStyle.borderWidth = 1;
+    outerStyle.borderStyle = 'dashed';
+    return (
+      <Animated.View style={outerStyle}>
+        <Animated.View style={innerStyle}>{children}</Animated.View>
+      </Animated.View>
+    );
+  }
+
   if (opacity !== undefined) {
     outerStyle.opacity = opacity;
   }

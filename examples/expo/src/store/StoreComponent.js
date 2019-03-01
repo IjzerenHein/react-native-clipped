@@ -1,4 +1,3 @@
-// @flow
 import { observable } from 'mobx';
 import { Dimensions, Easing } from 'react-native';
 import { Transition } from 'react-native-magic-move';

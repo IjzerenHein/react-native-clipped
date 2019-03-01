@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, ImageBackground } from 'react-native';
+import type { ShapeType, ContentType, SizeType, ShapeFnType } from './types';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,19 +18,17 @@ const styles = StyleSheet.create({
 });
 
 type PropsType = {
-  style: any,
-  colors: 'red' | 'aqua' | 'cyan' | 'aero' | 'azure' | string,
-  size: 'tiny' | 'small' | 'medium' | 'large' | 'max',
-  shape: 'circle' | 'square' | 'rounded' | 'horzRect' | 'vertRect',
-  label: string,
-  backgroundColor: string,
-  imageSource: any,
+  content: ContentType,
+  size: SizeType,
+  shape: ShapeType,
+  style?: any,
+  label?: string,
 };
 
 const MAX_WIDTH = Dimensions.get('window').width;
 const MAX_HEIGHT = Dimensions.get('window').height;
 
-const COLORS = {
+const COLORS: { [ContentType]: string } = {
   red: '#FC4445',
   aqua: '#3FEEE6',
   cyan: '#55BCC9',
@@ -37,7 +36,17 @@ const COLORS = {
   azure: '#CAFAFE',
 };
 
-const SHAPES = {
+export const CONTENTS: { [ContentType]: any } = {
+  image1: { imageSource: require('../assets/eclipse.jpg') },
+  image2: { imageSource: require('../assets/pizza.jpg') },
+  red: { backgroundColor: COLORS.red },
+  aqua: { backgroundColor: COLORS.aqua },
+  cyan: { backgroundColor: COLORS.cyan },
+  aero: { backgroundColor: COLORS.aero },
+  azure: { backgroundColor: COLORS.azure },
+};
+
+export const SHAPES: { [ShapeType]: ShapeFnType } = {
   circle: ({ width, height }) => ({
     borderRadius: Math.min(width, height) / 2,
   }),
@@ -45,8 +54,7 @@ const SHAPES = {
   roundedSquare: ({ width, height }) => ({
     borderRadius: Math.min(width, height) / 6,
   }),
-
-  rect: ({ height }) => ({
+  rect13: ({ height }) => ({
     height: height / 4,
   }),
 
@@ -61,7 +69,7 @@ const SHAPES = {
   }),
 };
 
-const SIZES = {
+export const SIZES = {
   tiny: {
     width: 16,
     height: 16,
@@ -87,28 +95,40 @@ const SIZES = {
 export class Example extends Component<PropsType> {
   static defaultProps = {
     size: 'large',
-    shape: 'rect',
-    color: 'cyan',
+    shape: 'rect13',
+    content: 'cyan',
   };
 
   render() {
-    const { size, shape, color, label, imageSource } = this.props;
+    const { size, shape, content, label, style } = this.props;
     const sizeStyle = SIZES[size];
+    const contentProps = CONTENTS[content];
 
-    const style = {
+    const containerStyle = {
       ...sizeStyle,
       ...SHAPES[shape](sizeStyle),
-      backgroundColor: COLORS[color] || color,
     };
-    if (size.label === 'Max') {
-      style.margin = 0;
-      style.height = undefined;
-      style.flex = 1;
+    if (contentProps.backgroundColor) {
+      containerStyle.backgroundColor = contentProps.backgroundColor;
     }
-    return (
-      <View style={[styles.container, this.props.style, style]}>
-        <Text style={styles.text}>{label}</Text>
-      </View>
-    );
+    if (size === 'max') {
+      containerStyle.margin = 0;
+      containerStyle.height = undefined;
+      containerStyle.flex = 1;
+    }
+
+    const children = label ? <Text style={styles.text}>{label}</Text> : undefined;
+
+    if (contentProps.imageSource) {
+      return (
+        <ImageBackground
+          style={[styles.container, containerStyle, style]}
+          source={contentProps.imageSource}>
+          {children}
+        </ImageBackground>
+      );
+    } else {
+      return <View style={[styles.container, containerStyle, style]}>{children}</View>;
+    }
   }
 }

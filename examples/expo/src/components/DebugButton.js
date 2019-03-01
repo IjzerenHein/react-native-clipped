@@ -9,7 +9,9 @@ export const DebugButton = storeObserver((props: { store: Store }) => {
     <FlatButton
       style={{ marginRight: 8 }}
       label="Debug"
-      onPress={() => (store.debug = !store.debug)}
+      onPress={() => {
+        store.debug = !store.debug;
+      }}
       checked={store.debug}
     />
   );

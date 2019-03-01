@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import * as Clippable from 'react-native-clippable';
+import * as Clipped from 'react-native-clipped';
 import { storeObserver, Store } from '../store';
 
 const styles = StyleSheet.create({

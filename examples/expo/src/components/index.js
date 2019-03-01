@@ -4,4 +4,5 @@ export * from './DebugButton';
 export * from './RunButton';
 export * from './FlatButton';
 export * from './Example';
-// export * from './TransitionComponent';
+export * from './Option';
+export * from './Label';

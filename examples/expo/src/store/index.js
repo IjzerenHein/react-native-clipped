@@ -1,10 +1,14 @@
 // @flow
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { observable } from 'mobx';
+import type { IObservableValue } from 'mobx';
 import { inject, observer, Provider } from 'mobx-react';
+import { StoreViewComponent } from './StoreViewComponent';
 
 export class Store {
+  _debug: IObservableValue<boolean>;
+  _runId: IObservableValue<number>;
+
   constructor() {
     this._debug = observable.box(false);
     this._runId = observable.box(0);
@@ -25,7 +29,7 @@ export class Store {
   }
 }
 
-export class StoreProvider extends PureComponent {
+export class StoreProvider extends PureComponent<{}, { store: Store }> {
   state = {
     store: new Store(),
   };
@@ -35,8 +39,8 @@ export class StoreProvider extends PureComponent {
   }
 }
 
-export function storeObserver(WrappedComponent) {
+export function storeObserver(WrappedComponent: any) {
   return inject('store')(observer(WrappedComponent));
 }
 
-export const StorePropType = PropTypes.any.isRequired;
+//export StoreViewComponent;
