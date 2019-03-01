@@ -15,8 +15,6 @@ type PropsType = {
   store: Store,
 };
 
-const TRANSITIONS = ['slideLeft', 'slideRight', 'slideUp', 'slideDown'];
-
 const CONTENTS = ['cyan', 'azure', 'red', 'aero', 'aqua', 'image1', 'image2'];
 
 export const TransitionsScreen = storeObserver(
@@ -26,7 +24,7 @@ export const TransitionsScreen = storeObserver(
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.container}>
-            {TRANSITIONS.map((transition, index) => (
+            {Clipped.Transitions.map((transition, index) => (
               <Clipped.Transition
                 key={`transition.${index}`}
                 transition={transition}

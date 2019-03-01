@@ -15,27 +15,6 @@ type PropsType = {
   store: Store,
 };
 
-const ANIMATIONS = [
-  'slideInLeft',
-  'slideInRight',
-  'slideInUp',
-  'slideInDown',
-  'closeSlidingDoors',
-  'closeSlidingDoorsVertical',
-  'growCenter',
-  'flipInX',
-  'flipInY',
-  'slideOutLeft',
-  'slideOutRight',
-  'slideOutUp',
-  'slideOutDown',
-  'openSlidingDoors',
-  'openSlidingDoorsVertical',
-  'shrinkCenter',
-  'flipOutX',
-  'flipOutY',
-];
-
 const CONTENTS = ['cyan', 'azure', 'red', 'aero', 'aqua'];
 
 export const ViewAnimationsScreen = storeObserver(
@@ -45,7 +24,7 @@ export const ViewAnimationsScreen = storeObserver(
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.container}>
-            {ANIMATIONS.map((animation, index) => (
+            {Clipped.Animations.map((animation, index) => (
               <Clipped.View
                 key={`${store.runId}.${index}`}
                 animation={animation}

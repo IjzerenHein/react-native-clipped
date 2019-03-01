@@ -18,9 +18,15 @@ export type ClippedAnimationType =
   | 'slideOutLeft'
   | 'slideOutRight'
   | 'slideOutUp'
-  | 'slideOutDown';
+  | 'slideOutDown'
+  | 'openSlidingDoors'
+  | 'openSlidingDoorsVertical'
+  | 'closeSlidingDoors'
+  | 'closeSlidingDoorsVertical'
+  | 'growCenter'
+  | 'shrinkCenter';
 
-export const ClippedAnimations = {
+export const ClippedAnimations: { [ClippedAnimationType]: any } = {
   slideInLeft: [{ translateX: [1, 0] }],
   slideInRight: [{ translateX: [-1, 0] }],
   slideInUp: [{ translateY: [1, 0] }],
@@ -47,11 +53,11 @@ export const ClippedAnimations = {
   ],
   growCenter: [{ scaleX: [0.001, 1], scaleY: [0.001, 1] }],
   shrinkCenter: [{ exit: true, scaleX: [1, 0.001], scaleY: [1, 0.001] }],
-  flipInX: [{ rotateX: ['90deg', '0deg'], overlayColor: 'black', overlayOpacity: [0.5, 0] }],
+  /*flipInX: [{ rotateX: ['90deg', '0deg'], overlayColor: 'black', overlayOpacity: [0.5, 0] }],
   flipOutX: [{ exit: true, rotateX: ['0deg', '90deg'] }],
   flipInY: [{ rotateY: ['90deg', '0deg'] }],
   flipOutY: [{ exit: true, rotateY: ['0deg', '90deg'] }],
-  /*harmonicaInX: [
+  harmonicaInX: [
     {
       height: 0.5,
       translateY: a => mul(sub(1, arc2(a)), 0.25),
