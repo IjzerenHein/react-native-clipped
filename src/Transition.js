@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ClippedView } from './View';
-import type { ClippedTransitionType } from './Transitions';
-import { ClippedTransitions } from './Transitions';
+import type { ClippedTransitionName, ClippedTransitionType } from './Transitions';
+import { resolveTransition } from './Transitions';
 
 export type ClippedTransitionProps = {
   style?: View.propTypes.style,
   children: any,
   // Animation props
-  transition: ClippedTransitionType,
+  transition: ClippedTransitionName | ClippedTransitionType,
   duration?: number,
   delay?: number,
   easing?: (t: number) => number,
@@ -75,10 +75,10 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
 
     const { child, prevChildren } = this.state;
     const children = child ? [...prevChildren, child] : prevChildren;
-    const { show, hide } = ClippedTransitions[transition];
+    const { show, hide } = resolveTransition(transition);
     return (
       <View style={style} {...otherProps}>
-        {children.map(child => {
+        {React.Children.map(children, child => {
           const isHiding = child !== this.state.child;
           return (
             <ClippedView

@@ -10,7 +10,7 @@ function arc2(animValue: any): any {
   return Animated.subtract(1, Animated.multiply(sub, sub));
 }*/
 
-export type ClippedAnimationType =
+export type ClippedAnimationName =
   | 'slideInLeft'
   | 'slideInRight'
   | 'slideInUp'
@@ -26,7 +26,9 @@ export type ClippedAnimationType =
   | 'growCenter'
   | 'shrinkCenter';
 
-export const ClippedAnimations: { [ClippedAnimationType]: any } = {
+export type ClippedAnimationType = any;
+
+export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType } = {
   slideInLeft: [{ translateX: [1, 0] }],
   slideInRight: [{ translateX: [-1, 0] }],
   slideInUp: [{ translateY: [1, 0] }],
@@ -80,7 +82,9 @@ export const ClippedAnimations: { [ClippedAnimationType]: any } = {
   ],*/
 };
 
-export function resolveAnimation(animation: any) {
+export function resolveAnimation(
+  animation: ClippedAnimationName | ClippedAnimationType
+): ClippedAnimationType {
   if (typeof animation === 'string') {
     const dsl = ClippedAnimations[animation];
     if (!dsl) throw new Error(`[Clipped] Invalid animation specified: ${animation}`);
@@ -95,7 +99,7 @@ export function resolveAnimation(animation: any) {
   return animation;
 }
 
-export function isExitAnimation(animation: any) {
+export function isExitAnimation(animation: ClippedAnimationName | ClippedAnimationType): boolean {
   animation = resolveAnimation(animation);
   return animation[0].exit || false;
 }

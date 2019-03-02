@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { View, Animated } from 'react-native';
 import { ClippedFragment } from './Fragment';
 import { resolveAnimation, isExitAnimation } from './Animations';
-import type { ClippedAnimationType } from './Animations';
+import type { ClippedAnimationName, ClippedAnimationType } from './Animations';
+
+export type ClippedViewAnimationProps = {};
 
 export type ClippedViewProps = {
   style?: View.propTypes.style,
@@ -20,7 +22,7 @@ export type ClippedViewProps = {
   topRotate?: number,
 
   // Animation props
-  animation?: ClippedAnimationType,
+  animation?: ClippedAnimationName | ClippedAnimationType,
   // move: boolean,
   //fade: boolean,
   duration?: number,
@@ -34,7 +36,7 @@ export type ClippedViewProps = {
 };
 
 type StateType = {
-  animation?: ClippedAnimationType,
+  animation?: ClippedAnimationName | ClippedAnimationType,
   animValue?: Animated.Value,
   anim: any,
   width: ?number,

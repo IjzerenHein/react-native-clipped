@@ -5,9 +5,9 @@ import { Router, Scene, Tabs } from 'react-native-router-flux';
 import { Ionicons } from '@expo/vector-icons';
 import { StoreProvider } from './store';
 import { DebugButton, RunButton } from './components';
-import { OtherScreen } from './other';
 import { ViewExamplesScreen, ViewExplorerScreen, ViewAnimationsScreen } from './view';
 import { TransitionsScreen } from './transition';
+import { SeriesScreen } from './series';
 
 const TabBarIcon = (props: { name: string, tintColor: string }) => (
   <Ionicons
@@ -17,24 +17,16 @@ const TabBarIcon = (props: { name: string, tintColor: string }) => (
   />
 );
 
-const TransitionIcon = props => <TabBarIcon name="color-wand" {...props} />;
-const AnimationIcon = props => <TabBarIcon name="color-wand" {...props} />;
-const ViewIcon = props => <TabBarIcon name="microphone" {...props} />;
-const OtherIcon = props => <TabBarIcon name="bug" {...props} />;
+const TransitionIcon = props => <TabBarIcon name="boat" {...props} />;
+const AnimationIcon = props => <TabBarIcon name="bowtie" {...props} />;
+const ViewIcon = props => <TabBarIcon name="pizza" {...props} />;
+const SeriesIcon = props => <TabBarIcon name="film" {...props} />;
 const ExplorerIcon = props => <TabBarIcon name="rocket" {...props} />;
 
 const App = () => (
   <StoreProvider>
     <Router>
       <Tabs>
-        <Scene
-          key="viewExplorer"
-          component={ViewExplorerScreen}
-          title="View Explorer"
-          tabBarLabel="Explorer"
-          icon={ExplorerIcon}
-          renderRightButton={() => <DebugButton />}
-        />
         <Scene
           key="viewExamples"
           component={ViewExamplesScreen}
@@ -62,22 +54,22 @@ const App = () => (
           renderRightButton={() => <DebugButton />}
         />
         <Scene
-          key="other"
-          component={OtherScreen}
-          title="Other"
-          tabBarLabel="Other"
-          icon={OtherIcon}
+          key="series"
+          component={SeriesScreen}
+          title="Series"
+          tabBarLabel="Series"
+          icon={SeriesIcon}
           renderLeftButton={() => <RunButton />}
           renderRightButton={() => <DebugButton />}
         />
-        {/*<Scene
-        key="explorer"
-        component={ExplorerScreen}
-        title="Transition"
-        tabBarLabel="Explore"
-        icon={ExplorerIcon}
-        renderRightButton={() => <DebugButton />}
-      />*/}
+        <Scene
+          key="viewExplorer"
+          component={ViewExplorerScreen}
+          title="View Explorer"
+          tabBarLabel="Explorer"
+          icon={ExplorerIcon}
+          renderRightButton={() => <DebugButton />}
+        />
       </Tabs>
     </Router>
   </StoreProvider>

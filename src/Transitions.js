@@ -1,7 +1,7 @@
 // @flow
-import type { ClippedAnimationType } from './Animations';
+import type { ClippedAnimationName } from './Animations';
 
-export type ClippedTransitionType =
+export type ClippedTransitionName =
   | 'slideLeft'
   | 'slideRight'
   | 'slideUp'
@@ -10,12 +10,12 @@ export type ClippedTransitionType =
   | 'slidingDoorsVertical'
   | 'center';
 
-export const ClippedTransitions: {
-  [ClippedTransitionType]: {
-    show: ClippedAnimationType,
-    hide: ClippedAnimationType,
-  },
-} = {
+export type ClippedTransitionType = {
+  show: ClippedAnimationName,
+  hide: ClippedAnimationName,
+};
+
+export const ClippedTransitions: { [ClippedTransitionName]: ClippedTransitionType } = {
   slideLeft: {
     show: 'slideInLeft',
     hide: 'slideOutLeft',
@@ -45,3 +45,17 @@ export const ClippedTransitions: {
     hide: 'shrinkCenter',
   },
 };
+
+export function resolveTransition(
+  transition: ClippedTransitionName | ClippedTransitionType
+): ClippedTransitionType {
+  if (typeof transition === 'string') {
+    const dsl = ClippedTransitions[transition];
+    if (!dsl) throw new Error(`[Clipped] Invalid transition specified: ${transition}`);
+    transition = dsl;
+  }
+  if (!transition) {
+    throw new Error(`[Clipped] Invalid transition specified: ${transition}`);
+  }
+  return transition;
+}
