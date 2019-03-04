@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Animated } from 'react-native';
+import { View, Animated, StyleSheet } from 'react-native';
 import { ClippedFragment } from './Fragment';
 import { resolveAnimation, isExitAnimation } from './Animations';
-import type { ClippedAnimationName, ClippedAnimationType } from './Animations';
+import type { ClippedAnimation } from './Animations';
 
 export type ClippedViewAnimationProps = {};
 
@@ -22,7 +22,7 @@ export type ClippedViewProps = {
   topRotate?: number,
 
   // Animation props
-  animation?: ClippedAnimationName | ClippedAnimationType,
+  animation?: ClippedAnimation,
   // move: boolean,
   //fade: boolean,
   duration?: number,
@@ -36,7 +36,7 @@ export type ClippedViewProps = {
 };
 
 type StateType = {
-  animation?: ClippedAnimationName | ClippedAnimationType,
+  animation?: ClippedAnimation,
   animValue?: Animated.Value,
   anim: any,
   width: ?number,
@@ -80,11 +80,11 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
         useNativeDriver,
       });
       newState.anim.start(props.onAnimationEnd);
-    } else if (state.anim && !props.animation) {
+      /*} else if (state.anim && !props.animation) {
       newState = newState || {};
       newState.animation = undefined;
       newState.anim = undefined;
-      newState.animValue = undefined;
+      newState.animValue = undefined;*/
     } else if (state.animation && props.animation && state.animation !== props.animation) {
       newState = newState || {};
       const { duration, delay, easing, useNativeDriver } = props;
@@ -227,6 +227,9 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
         </ClippedFragment>
       );
     }
+    if (result === children) {
+      result = <View style={StyleSheet.absoluteFill}>{children}</View>;
+    }
     return result;
   }
 
@@ -234,7 +237,7 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     // $FlowFixMe
     const animValue: Animated.Value = this.state.animValue;
     const childContent = this.renderFragments(width, height, debug);
-    const animation = resolveAnimation(this.props.animation);
+    const animation = resolveAnimation(this.state.animation);
     //const isExitAnimation = animation[0].exit || false;
     return animation.map((anim, idx) => {
       const vals: any = {

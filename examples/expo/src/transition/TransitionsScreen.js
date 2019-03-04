@@ -24,14 +24,14 @@ export const TransitionsScreen = storeObserver(
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.container}>
-            {Clipped.Transitions.map((transition, index) => (
+            {Clipped.Animations.filter(a => !Clipped.isExitAnimation(a)).map((animation, index) => (
               <Clipped.Transition
                 key={`transition.${index}`}
-                transition={transition}
+                animation={animation}
                 debug={store.debug}>
                 <Example
-                  key={`${transition}.${store.runId}`}
-                  label={transition}
+                  key={`${animation}.${store.runId}`}
+                  label={animation}
                   content={CONTENTS[(index + store.runId) % CONTENTS.length]}
                 />
               </Clipped.Transition>

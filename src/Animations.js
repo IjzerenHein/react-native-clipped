@@ -24,9 +24,12 @@ export type ClippedAnimationName =
   | 'closeSlidingDoors'
   | 'closeSlidingDoorsVertical'
   | 'growCenter'
-  | 'shrinkCenter';
+  | 'shrinkCenter'
+  | 'growTiles';
 
 export type ClippedAnimationType = any;
+
+export type ClippedAnimation = ClippedAnimationName | ClippedAnimationType;
 
 export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType } = {
   slideInLeft: [{ translateX: [1, 0] }],
@@ -38,23 +41,29 @@ export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType }
   slideOutUp: [{ exit: true, translateY: [0, -1] }],
   slideOutDown: [{ exit: true, translateY: [0, 1] }],
   openSlidingDoors: [
-    { exit: true, width: 0.5, translateX: [0, -1] },
-    { left: 0.5, width: 0.5, translateX: [0, 1] },
+    { exit: true, width: 0.5, translateX: [0, -0.5] },
+    { left: 0.5, width: 0.5, translateX: [0, 0.5] },
   ],
   closeSlidingDoors: [
-    { width: 0.5, translateX: [-1, 0] },
-    { left: 0.5, width: 0.5, translateX: [1, 0] },
+    { width: 0.5, translateX: [-0.5, 0] },
+    { left: 0.5, width: 0.5, translateX: [0.5, 0] },
   ],
   openSlidingDoorsVertical: [
-    { exit: true, height: 0.5, translateY: [0, -1] },
-    { top: 0.5, height: 0.5, translateY: [0, 1] },
+    { exit: true, height: 0.5, translateY: [0, -0.5] },
+    { top: 0.5, height: 0.5, translateY: [0, 0.5] },
   ],
   closeSlidingDoorsVertical: [
-    { height: 0.5, translateY: [-1, 0] },
-    { top: 0.5, height: 0.5, translateY: [1, 0] },
+    { height: 0.5, translateY: [-0.5, 0] },
+    { top: 0.5, height: 0.5, translateY: [0.5, 0] },
   ],
   growCenter: [{ scaleX: [0.001, 1], scaleY: [0.001, 1] }],
   shrinkCenter: [{ exit: true, scaleX: [1, 0.001], scaleY: [1, 0.001] }],
+  growTiles: [
+    { width: 0.5, height: 0.5, scaleX: [0.001, 1], scaleY: [0.001, 1] },
+    { width: 0.5, height: 0.5, left: 0.5, scaleX: [0.001, 1], scaleY: [0.001, 1] },
+    { width: 0.5, height: 0.5, top: 0.5, scaleX: [0.001, 1], scaleY: [0.001, 1] },
+    { width: 0.5, height: 0.5, left: 0.5, top: 0.5, scaleX: [0.001, 1], scaleY: [0.001, 1] },
+  ],
   /*flipInX: [{ rotateX: ['90deg', '0deg'], overlayColor: 'black', overlayOpacity: [0.5, 0] }],
   flipOutX: [{ exit: true, rotateX: ['0deg', '90deg'] }],
   flipInY: [{ rotateY: ['90deg', '0deg'] }],
@@ -82,9 +91,7 @@ export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType }
   ],*/
 };
 
-export function resolveAnimation(
-  animation: ClippedAnimationName | ClippedAnimationType
-): ClippedAnimationType {
+export function resolveAnimation(animation: ClippedAnimation): ClippedAnimationType {
   if (typeof animation === 'string') {
     const dsl = ClippedAnimations[animation];
     if (!dsl) throw new Error(`[Clipped] Invalid animation specified: ${animation}`);
@@ -99,7 +106,7 @@ export function resolveAnimation(
   return animation;
 }
 
-export function isExitAnimation(animation: ClippedAnimationName | ClippedAnimationType): boolean {
+export function isExitAnimation(animation: ClippedAnimation): boolean {
   animation = resolveAnimation(animation);
   return animation[0].exit || false;
 }
