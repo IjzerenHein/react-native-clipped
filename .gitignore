@@ -1,3 +1,5 @@
 node_modules/**/*
 npm-debug.*
 .DS_Store
+/dist
+yarn-error.log

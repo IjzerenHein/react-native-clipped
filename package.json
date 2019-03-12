@@ -13,17 +13,21 @@
   "repository": "https://github.com/IjzerenHein/react-native-clipped",
   "bugs": "https://github.com/IjzerenHein/react-native-clipped",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "react-native": "src/index.js",
   "files": [
-    "src"
+    "src",
+    "dist"
   ],
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./src",
     "flow": "./node_modules/.bin/flow ."
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-transform-flow-strip-types": "^7.3.4",
     "babel-eslint": "^10.0.1",
+    "bili": "^4.4.0",
     "eslint": "^5.12.1",
     "eslint-config-universe": "^1.0.7",
     "eslint-plugin-react": "^7.12.4",
