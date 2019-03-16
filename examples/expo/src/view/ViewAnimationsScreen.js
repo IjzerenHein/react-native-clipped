@@ -24,14 +24,26 @@ export const ViewAnimationsScreen = storeObserver(
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.container}>
-            {Clipped.Animations.map((animation, index) => (
-              <Clipped.View
-                key={`${store.runId}.${index}`}
-                animation={animation}
-                debug={store.debug}>
-                <Example label={animation} content={CONTENTS[index % CONTENTS.length]} />
-              </Clipped.View>
-            ))}
+            {Clipped.Animations.filter(anim => !Clipped.isExitAnimation(anim)).map(
+              (animation, index) => (
+                <Clipped.View
+                  key={`${store.runId}.${index}`}
+                  animation={animation}
+                  debug={store.debug}>
+                  <Example label={animation} content={CONTENTS[index % CONTENTS.length]} />
+                </Clipped.View>
+              )
+            )}
+            {Clipped.Animations.filter(anim => Clipped.isExitAnimation(anim)).map(
+              (animation, index) => (
+                <Clipped.View
+                  key={`${store.runId}.${index}`}
+                  animation={animation}
+                  debug={store.debug}>
+                  <Example label={animation} content={CONTENTS[index % CONTENTS.length]} />
+                </Clipped.View>
+              )
+            )}
           </ScrollView>
         </SafeAreaView>
       );

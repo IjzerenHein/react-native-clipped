@@ -23,7 +23,7 @@ export type ClippedViewProps = {
 
   // Animation props
   animation?: ClippedAnimation,
-  // move: boolean,
+  // move?: boolean,
   //fade: boolean,
   duration?: number,
   delay?: number,
@@ -241,7 +241,6 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     //const isExitAnimation = animation[0].exit || false;
     return animation.map((anim, idx) => {
       const vals: any = {
-        //move: this.props.move,
         debug,
         left: 0,
         top: 0,
@@ -299,14 +298,15 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       style,
       children,
       // Clipping props
-      left = 0, // eslint-disable-line
-      top = 0, // eslint-disable-line
-      right = 0, // eslint-disable-line
-      bottom = 0, // eslint-disable-line
-      leftRotate = 0, // eslint-disable-line
-      topRotate = 0, // eslint-disable-line
-      rightRotate = 0, // eslint-disable-line
-      bottomRotate = 0, // eslint-disable-line
+      // move, // eslint-disable-line
+      left, // eslint-disable-line
+      top, // eslint-disable-line
+      right, // eslint-disable-line
+      bottom, // eslint-disable-line
+      leftRotate, // eslint-disable-line
+      topRotate, // eslint-disable-line
+      rightRotate, // eslint-disable-line
+      bottomRotate, // eslint-disable-line
       // Animation props
       animation, // eslint-disable-line
       duration, // eslint-disable-line

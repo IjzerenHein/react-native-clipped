@@ -73,20 +73,20 @@ export const ClippedFragment = (props: PropsType) => {
     innerStyle.transform.push({ rotateZ: `-${rotateZ}`.replace('--', '') });
   }
   if (translateX !== undefined) {
-    outerStyle.transform.push({ translateX });
-    if (!move) innerStyle.transform.push({ translateX: Animated.subtract(0, translateX) });
+    if (!move) outerStyle.transform.push({ translateX });
+    innerStyle.transform.push({ translateX: move ? translateX : Animated.subtract(0, translateX) });
   }
   if (translateY !== undefined) {
-    outerStyle.transform.push({ translateY });
-    if (!move) innerStyle.transform.push({ translateY: Animated.subtract(0, translateY) });
+    if (!move) outerStyle.transform.push({ translateY });
+    innerStyle.transform.push({ translateY: move ? translateY : Animated.subtract(0, translateY) });
   }
   if (scaleX !== undefined) {
-    outerStyle.transform.push({ scaleX });
-    if (!move) innerStyle.transform.push({ scaleX: Animated.divide(1, scaleX) });
+    if (!move) outerStyle.transform.push({ scaleX });
+    innerStyle.transform.push({ scaleX: move ? scaleX : Animated.divide(1, scaleX) });
   }
   if (scaleY !== undefined) {
-    outerStyle.transform.push({ scaleY });
-    if (!move) innerStyle.transform.push({ scaleY: Animated.divide(1, scaleY) });
+    if (!move) outerStyle.transform.push({ scaleY });
+    innerStyle.transform.push({ scaleY: move ? scaleY : Animated.divide(1, scaleY) });
   }
   if (rotateX !== undefined) {
     outerStyle.transform.push({ rotateX });
