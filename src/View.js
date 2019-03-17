@@ -23,6 +23,7 @@ export type ClippedViewProps = {
 
   // Animation props
   animation?: ClippedAnimation,
+  animValue?: any,
   hide?: boolean,
   invert?: boolean,
   //fade: boolean,
@@ -72,7 +73,9 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       return null;
     }
 
-    if (!state.anim && props.animation) {
+    if (props.animValue) {
+      return state.animValue !== props.animValue ? { animValue: props.animValue } : null;
+    } else if (!state.anim && props.animation) {
       newState = newState || {};
       const { duration, delay, easing, useNativeDriver } = props;
       newState.animation = props.animation;
