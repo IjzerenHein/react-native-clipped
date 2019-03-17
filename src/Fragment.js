@@ -33,8 +33,6 @@ export const ClippedFragment = (props: PropsType) => {
     debug = false,
     width,
     height,
-    originalWidth,
-    originalHeight,
     left = 0,
     top = 0,
     translateX,
@@ -49,7 +47,9 @@ export const ClippedFragment = (props: PropsType) => {
     overlayOpacity,
     perspective,
   } = props;
-  const outerStyle: any = {
+  const originalWidth = props.originalWidth === undefined ? width : props.originalWidth;
+  const originalHeight = props.originalHeight === undefined ? width : props.originalHeight;
+  const fragmentStyle: any = {
     position: 'absolute',
     left,
     top,
@@ -58,12 +58,24 @@ export const ClippedFragment = (props: PropsType) => {
     overflow: 'hidden',
     transform: [],
   };
+  const outerStyle: any =
+    !move && (originalWidth !== width || originalHeight !== height)
+      ? {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width,
+          height,
+          overflow: 'hidden',
+          transform: [],
+        }
+      : fragmentStyle;
   const innerStyle: any = {
     position: 'absolute',
     left: -left,
     top: -top,
-    width: originalWidth === undefined ? width : originalWidth,
-    height: originalHeight === undefined ? height : originalHeight,
+    width: originalWidth,
+    height: originalHeight,
     transform: [],
   };
   if (perspective) {
@@ -128,7 +140,7 @@ export const ClippedFragment = (props: PropsType) => {
       />
     );
   }
-  return (
+  const content = (
     <Animated.View style={outerStyle}>
       <Animated.View style={innerStyle}>
         {children}
@@ -136,4 +148,9 @@ export const ClippedFragment = (props: PropsType) => {
       </Animated.View>
     </Animated.View>
   );
+  if (outerStyle !== fragmentStyle) {
+    return <View style={fragmentStyle}>{content}</View>;
+  } else {
+    return content;
+  }
 };

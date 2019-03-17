@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 32,
     fontWeight: 'bold',
-    // letterSpacing: 1,
     color: 'white',
   },
   solidBox: {
@@ -23,8 +22,6 @@ const styles = StyleSheet.create({
   },
   solidText: {
     fontSize: 32,
-    // fontWeight: 'bold',
-    // letterSpacing: 1,
     color: 'black',
   },
 });
@@ -33,36 +30,45 @@ type PropsType = {
   store: Store,
   animations: Array<Animation>,
   solid?: boolean,
+  move?: boolean,
 };
 type StateType = {
   index: number,
+  hide: boolean,
 };
 
 export const ViewVideoExample = storeObserver(
   class ViewVideoExample extends Component<PropsType, StateType> {
     static defaultProps = {
       animations: Clipped.Animations,
+      //animations: ['scaleCenter'],
     };
-    state = { index: 0 };
+    state = { index: 0, hide: false };
     render() {
-      const { store, animations, solid } = this.props;
-      const { index } = this.state;
+      const { store, animations, solid, move } = this.props;
+      const { index, hide } = this.state;
       const animation = animations[index % animations.length];
       return (
         <Clipped.Transition
           animation={animation}
+          move={move}
           debug={store.debug}
           onTransitionEnd={this.onTransitionEnd}>
-          <View key={animation} style={solid ? styles.solidBox : styles.box}>
-            <Text style={solid ? styles.solidText : styles.text}>{animation}</Text>
-          </View>
+          {!hide ? (
+            <View key={animation} style={solid ? styles.solidBox : styles.box}>
+              <Text style={solid ? styles.solidText : styles.text}>{animation}</Text>
+            </View>
+          ) : (
+            undefined
+          )}
         </Clipped.Transition>
       );
     }
 
     onTransitionEnd = () => {
       this.setState({
-        index: this.state.index + 1,
+        hide: !this.state.hide,
+        index: this.state.index + (this.state.hide ? 1 : 0),
       });
     };
   }

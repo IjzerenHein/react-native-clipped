@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ClippedView } from './View';
 import type { ClippedAnimationName, ClippedAnimationType } from './Animations';
-import { resolveAnimation, isExitAnimation } from './Animations';
 
 export type ClippedTransitionProps = {
   style?: View.propTypes.style,
   children: any,
   // Animation props
   animation: ClippedAnimationName | ClippedAnimationType,
+  move?: boolean,
+  invert?: boolean,
   duration?: number,
   delay?: number,
   easing?: (t: number) => number,
@@ -40,10 +41,9 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
   static getDerivedStateFromProps(props: ClippedTransitionProps, state: StateType) {
     let newState: any = null;
 
-    const child = isExitAnimation(props.animation)
-      ? undefined
-      : React.Children.only(props.children);
-
+    const child = React.Children.count(props.children)
+      ? React.Children.only(props.children)
+      : undefined;
     if (!child && state.child) {
       newState = newState || {};
       newState.child = undefined;
@@ -65,6 +65,8 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
       style,
       // Animation props
       animation,
+      move, // eslint-disable-line
+      invert, // eslint-disable-line
       duration, // eslint-disable-line
       delay, // eslint-disable-line
       easing, // eslint-disable-line
@@ -77,23 +79,32 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
 
     const { child, prevChildren } = this.state;
     const children = child ? [...prevChildren, child] : prevChildren;
-    const anim = resolveAnimation(animation);
-    const exit = isExitAnimation(animation);
+    console.log(
+      'TRANSITION.render, children: ',
+      children,
+      ', visibleChild: ',
+      child,
+      ', animation: ',
+      animation
+    );
+
     return (
       <View style={style} {...otherProps}>
         {React.Children.map(children, child => {
           const isHiding = child !== this.state.child;
-          if (!isHiding && exit) return null;
           return (
             <ClippedView
               key={child.key}
-              style={isHiding && !exit ? StyleSheet.absoluteFill : undefined}
-              animation={isHiding ? (exit ? anim : undefined) : anim}
+              style={isHiding && this.state.child ? StyleSheet.absoluteFill : undefined}
+              animation={animation}
+              hide={isHiding}
+              move={move}
+              invert={invert}
               duration={duration}
               delay={delay}
               easing={easing}
               useNativeDriver={useNativeDriver}
-              onAnimationEnd={isHiding && !exit ? undefined : this.onAnimationEnd}
+              onAnimationEnd={isHiding && this.state.child ? undefined : this.onAnimationEnd}
               debug={debug}>
               {child}
             </ClippedView>

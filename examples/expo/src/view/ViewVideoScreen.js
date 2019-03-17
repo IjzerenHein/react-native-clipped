@@ -56,6 +56,12 @@ export const ViewVideoScreen = storeObserver(
           <View style={styles.content2}>
             <ViewVideoExample />
           </View>
+          <View style={styles.content3}>
+            <ViewVideoExample solid move />
+          </View>
+          <View style={styles.content4}>
+            <ViewVideoExample move />
+          </View>
         </View>
       );
     }

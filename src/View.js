@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import { ClippedFragment } from './Fragment';
-import { resolveAnimation, isExitAnimation } from './Animations';
+import { resolveAnimation } from './Animations';
 import type { ClippedAnimation } from './Animations';
 
 export type ClippedViewAnimationProps = {};
@@ -23,7 +23,9 @@ export type ClippedViewProps = {
 
   // Animation props
   animation?: ClippedAnimation,
-  // move?: boolean,
+  hide?: boolean,
+  move?: boolean,
+  invert?: boolean,
   //fade: boolean,
   duration?: number,
   delay?: number,
@@ -37,6 +39,9 @@ export type ClippedViewProps = {
 
 type StateType = {
   animation?: ClippedAnimation,
+  hide?: boolean,
+  move?: boolean,
+  invert?: boolean,
   animValue?: Animated.Value,
   anim: any,
   width: ?number,
@@ -54,6 +59,9 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     super(props);
     this.state = {
       animation: undefined,
+      hide: undefined,
+      move: undefined,
+      invert: undefined,
       animValue: undefined,
       anim: undefined,
       width: undefined,
@@ -71,6 +79,9 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       newState = newState || {};
       const { duration, delay, easing, useNativeDriver } = props;
       newState.animation = props.animation;
+      newState.hide = props.hide;
+      newState.move = props.move;
+      newState.invert = props.invert;
       newState.animValue = new Animated.Value(0);
       newState.anim = Animated.timing(newState.animValue, {
         toValue: 1,
@@ -85,10 +96,20 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       newState.animation = undefined;
       newState.anim = undefined;
       newState.animValue = undefined;*/
-    } else if (state.animation && props.animation && state.animation !== props.animation) {
+    } else if (
+      state.animation &&
+      props.animation &&
+      (state.animation !== props.animation ||
+        state.hide !== props.hide ||
+        state.move !== props.move ||
+        state.invert !== props.invert)
+    ) {
       newState = newState || {};
       const { duration, delay, easing, useNativeDriver } = props;
       newState.animation = props.animation;
+      newState.hide = props.hide;
+      newState.move = props.move;
+      newState.invert = props.invert;
       const animValue = new Animated.Value(0);
       newState.animValue = Animated.add(Animated.subtract(state.animValue || 0, 1), animValue);
       newState.anim = Animated.timing(animValue, {
@@ -238,10 +259,11 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     const animValue: Animated.Value = this.state.animValue;
     const childContent = this.renderFragments(width, height, debug);
     const animation = resolveAnimation(this.state.animation);
-    //const isExitAnimation = animation[0].exit || false;
+    const { move, hide, invert } = this.props;
     return animation.map((anim, idx) => {
       const vals: any = {
         debug,
+        move,
         left: 0,
         top: 0,
         width,
@@ -255,8 +277,9 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
           outputRange: isExitAnimation ? [1, 0] : [0, 1],
         });
       }*/
-      Object.keys(anim).forEach(key => {
-        let val = anim[key];
+      const { hideMultiplier = -1, ...anim2 } = anim;
+      Object.keys(anim2).forEach(key => {
+        let val = anim2[key];
         let multiplier = 1;
         switch (key) {
           case 'left':
@@ -273,7 +296,11 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
         if (Array.isArray(val)) {
           val = animValue.interpolate({
             inputRange: [0, 1],
-            outputRange: val.map(arrVal => (multiplier !== 1 ? arrVal * multiplier : arrVal)),
+            outputRange: hide
+              ? val
+                  .map(arrVal => (multiplier !== 1 ? arrVal * multiplier * hideMultiplier : arrVal))
+                  .reverse()
+              : val.map(arrVal => (multiplier !== 1 ? arrVal * multiplier : arrVal)),
           });
         } else if (typeof val === 'function') {
           val = val(animValue);
@@ -298,7 +325,6 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       style,
       children,
       // Clipping props
-      // move, // eslint-disable-line
       left, // eslint-disable-line
       top, // eslint-disable-line
       right, // eslint-disable-line
@@ -309,6 +335,9 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       bottomRotate, // eslint-disable-line
       // Animation props
       animation, // eslint-disable-line
+      move, // eslint-disable-line
+      hide, // eslint-disable-line
+      invert, // eslint-disable-line
       duration, // eslint-disable-line
       delay, // eslint-disable-line
       easing, // eslint-disable-line
