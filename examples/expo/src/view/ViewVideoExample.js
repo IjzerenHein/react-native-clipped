@@ -30,7 +30,6 @@ type PropsType = {
   store: Store,
   animations: Array<Animation>,
   solid?: boolean,
-  move?: boolean,
 };
 type StateType = {
   index: number,
@@ -45,13 +44,12 @@ export const ViewVideoExample = storeObserver(
     };
     state = { index: 0, hide: false };
     render() {
-      const { store, animations, solid, move } = this.props;
+      const { store, animations, solid } = this.props;
       const { index, hide } = this.state;
       const animation = animations[index % animations.length];
       return (
         <Clipped.Transition
           animation={animation}
-          move={move}
           duration={2000}
           debug={store.debug}
           onTransitionEnd={this.onTransitionEnd}>

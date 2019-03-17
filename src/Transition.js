@@ -9,8 +9,6 @@ export type ClippedTransitionProps = {
   children: any,
   // Animation props
   animation: ClippedAnimationName | ClippedAnimationType,
-  move?: boolean,
-  invert?: boolean,
   duration?: number,
   delay?: number,
   easing?: (t: number) => number,
@@ -65,8 +63,6 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
       style,
       // Animation props
       animation,
-      move, // eslint-disable-line
-      invert, // eslint-disable-line
       duration, // eslint-disable-line
       delay, // eslint-disable-line
       easing, // eslint-disable-line
@@ -89,8 +85,6 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
               style={isHiding && this.state.child ? StyleSheet.absoluteFill : undefined}
               animation={animation}
               hide={isHiding}
-              move={move}
-              invert={invert}
               duration={duration}
               delay={delay}
               easing={easing}

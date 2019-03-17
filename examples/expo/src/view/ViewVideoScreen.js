@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Video } from 'expo';
+import * as Clipped from 'react-native-clipped';
 import { storeObserver, Store } from '../store';
 import { ViewVideoExample } from './ViewVideoExample';
 
@@ -36,7 +37,8 @@ type PropsType = {
 };
 type StateType = {};
 
-// const ANIMATIONS = Clipped.Animations;
+const ANIMATIONS = Clipped.Animations.filter(anim => !anim.startsWith('slide'));
+const SLIDE_ANIMATIONS = Clipped.Animations.filter(anim => anim.startsWith('slide'));
 
 export const ViewVideoScreen = storeObserver(
   class ViewVideoScreen extends Component<PropsType, StateType> {
@@ -51,16 +53,16 @@ export const ViewVideoScreen = storeObserver(
             resizeMode="cover"
           />
           <View style={styles.content1}>
-            <ViewVideoExample solid />
+            <ViewVideoExample solid animations={ANIMATIONS} />
           </View>
           <View style={styles.content2}>
-            <ViewVideoExample />
+            <ViewVideoExample animations={ANIMATIONS} />
           </View>
           <View style={styles.content3}>
-            <ViewVideoExample solid move />
+            <ViewVideoExample solid animations={SLIDE_ANIMATIONS} />
           </View>
           <View style={styles.content4}>
-            <ViewVideoExample move />
+            <ViewVideoExample animations={SLIDE_ANIMATIONS} />
           </View>
         </View>
       );

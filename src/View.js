@@ -24,7 +24,6 @@ export type ClippedViewProps = {
   // Animation props
   animation?: ClippedAnimation,
   hide?: boolean,
-  move?: boolean,
   invert?: boolean,
   //fade: boolean,
   duration?: number,
@@ -40,7 +39,6 @@ export type ClippedViewProps = {
 type StateType = {
   animation?: ClippedAnimation,
   hide?: boolean,
-  move?: boolean,
   invert?: boolean,
   animValue?: Animated.Value,
   anim: any,
@@ -60,7 +58,6 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     this.state = {
       animation: undefined,
       hide: undefined,
-      move: undefined,
       invert: undefined,
       animValue: undefined,
       anim: undefined,
@@ -80,7 +77,6 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       const { duration, delay, easing, useNativeDriver } = props;
       newState.animation = props.animation;
       newState.hide = props.hide;
-      newState.move = props.move;
       newState.invert = props.invert;
       newState.animValue = new Animated.Value(0);
       newState.anim = Animated.timing(newState.animValue, {
@@ -101,14 +97,12 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       props.animation &&
       (state.animation !== props.animation ||
         state.hide !== props.hide ||
-        state.move !== props.move ||
         state.invert !== props.invert)
     ) {
       newState = newState || {};
       const { duration, delay, easing, useNativeDriver } = props;
       newState.animation = props.animation;
       newState.hide = props.hide;
-      newState.move = props.move;
       newState.invert = props.invert;
       const animValue = new Animated.Value(0);
       newState.animValue = Animated.add(Animated.subtract(state.animValue || 0, 1), animValue);
@@ -259,11 +253,10 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     const animValue: Animated.Value = this.state.animValue;
     const childContent = this.renderFragments(width, height, debug);
     const animation = resolveAnimation(this.state.animation);
-    const { move, hide, invert } = this.props;
+    const { hide, invert } = this.props;
     return animation.map((anim, idx) => {
       const vals: any = {
         debug,
-        move,
         left: 0,
         top: 0,
         width,
@@ -335,7 +328,6 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       bottomRotate, // eslint-disable-line
       // Animation props
       animation, // eslint-disable-line
-      move, // eslint-disable-line
       hide, // eslint-disable-line
       invert, // eslint-disable-line
       duration, // eslint-disable-line

@@ -11,6 +11,20 @@ function arc2(animValue: any): any {
 }*/
 
 export type ClippedAnimationName =
+  | 'clipLeft'
+  | 'clipRight'
+  | 'clipUp'
+  | 'clipDown'
+  | 'clipLeftUp'
+  | 'clipRightUp'
+  | 'clipLeftDown'
+  | 'clipRightDown'
+  | 'clipInsideOut'
+  | 'clipInsideOutX'
+  | 'clipInsideOutY'
+  | 'clipOutsideIn'
+  | 'clipOutsideInX'
+  | 'clipOutsideInY'
   | 'slideLeft'
   | 'slideRight'
   | 'slideUp'
@@ -19,12 +33,8 @@ export type ClippedAnimationName =
   | 'slideRightUp'
   | 'slideLeftDown'
   | 'slideRightDown'
-  | 'insideOut'
-  | 'insideOutX'
-  | 'insideOutY'
-  | 'outsideIn'
-  | 'outsideInX'
-  | 'outsideInY';
+  | 'slideInsideOutX'
+  | 'slideInsideOutY';
 
 //| 'growTiles';
 
@@ -33,36 +43,52 @@ export type ClippedAnimationType = any;
 export type ClippedAnimation = ClippedAnimationName | ClippedAnimationType;
 
 export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType } = {
-  slideLeft: [{ translateX: [1, 0] }],
-  slideRight: [{ translateX: [-1, 0] }],
-  slideUp: [{ translateY: [1, 0] }],
-  slideDown: [{ translateY: [-1, 0] }],
-  slideLeftUp: [{ translateX: [1, 0], translateY: [1, 0] }],
-  slideLeftDown: [{ translateX: [1, 0], translateY: [-1, 0] }],
-  slideRightUp: [{ translateX: [-1, 0], translateY: [1, 0] }],
-  slideRightDown: [{ translateX: [-1, 0], translateY: [-1, 0] }],
-  insideOut: [{ scaleX: [0.001, 1], scaleY: [0.001, 1], move: false }],
-  insideOutX: [
+  clipLeft: [{ translateX: [1, 0] }],
+  clipRight: [{ translateX: [-1, 0] }],
+  clipUp: [{ translateY: [1, 0] }],
+  clipDown: [{ translateY: [-1, 0] }],
+  clipLeftUp: [{ translateX: [1, 0], translateY: [1, 0] }],
+  clipLeftDown: [{ translateX: [1, 0], translateY: [-1, 0] }],
+  clipRightUp: [{ translateX: [-1, 0], translateY: [1, 0] }],
+  clipRightDown: [{ translateX: [-1, 0], translateY: [-1, 0] }],
+  clipInsideOut: [{ scaleX: [0.001, 1], scaleY: [0.001, 1] }],
+  clipInsideOutX: [
     { width: 0.5, translateX: [0.5, 0], hideMultiplier: 1 },
     { left: 0.5, width: 0.5, translateX: [-0.5, 0], hideMultiplier: 1 },
   ],
-  insideOutY: [
+  clipInsideOutY: [
     { height: 0.5, translateY: [0.5, 0], hideMultiplier: 1 },
     { top: 0.5, height: 0.5, translateY: [-0.5, 0], hideMultiplier: 1 },
   ],
-  outsideIn: [
-    { width: 0.5, translateX: [-0.5, 0], move: false, hideMultiplier: 1 },
-    { left: 0.5, width: 0.5, translateX: [0.5, 0], move: false, hideMultiplier: 1 },
-    { height: 0.5, translateY: [-0.5, 0], move: false, hideMultiplier: 1 },
-    { top: 0.5, height: 0.5, translateY: [0.5, 0], move: false, hideMultiplier: 1 },
+  clipOutsideIn: [
+    { width: 0.5, translateX: [-0.5, 0], hideMultiplier: 1 },
+    { left: 0.5, width: 0.5, translateX: [0.5, 0], hideMultiplier: 1 },
+    { height: 0.5, translateY: [-0.5, 0], hideMultiplier: 1 },
+    { top: 0.5, height: 0.5, translateY: [0.5, 0], hideMultiplier: 1 },
   ],
-  outsideInX: [
-    { width: 0.5, translateX: [-0.5, 0], move: false, hideMultiplier: 1 },
-    { left: 0.5, width: 0.5, translateX: [0.5, 0], move: false, hideMultiplier: 1 },
+  clipOutsideInX: [
+    { width: 0.5, translateX: [-0.5, 0], hideMultiplier: 1 },
+    { left: 0.5, width: 0.5, translateX: [0.5, 0], hideMultiplier: 1 },
   ],
-  outsideInY: [
-    { height: 0.5, translateY: [-0.5, 0], move: false, hideMultiplier: 1 },
-    { top: 0.5, height: 0.5, translateY: [0.5, 0], move: false, hideMultiplier: 1 },
+  clipOutsideInY: [
+    { height: 0.5, translateY: [-0.5, 0], hideMultiplier: 1 },
+    { top: 0.5, height: 0.5, translateY: [0.5, 0], hideMultiplier: 1 },
+  ],
+  slideLeft: [{ translateX: [1, 0], move: true }],
+  slideRight: [{ translateX: [-1, 0], move: true }],
+  slideUp: [{ translateY: [1, 0], move: true }],
+  slideDown: [{ translateY: [-1, 0], move: true }],
+  slideLeftUp: [{ translateX: [1, 0], translateY: [1, 0], move: true }],
+  slideLeftDown: [{ translateX: [1, 0], translateY: [-1, 0], move: true }],
+  slideRightUp: [{ translateX: [-1, 0], translateY: [1, 0], move: true }],
+  slideRightDown: [{ translateX: [-1, 0], translateY: [-1, 0], move: true }],
+  slideInsideOutX: [
+    { width: 0.5, translateX: [0.5, 0], hideMultiplier: 1, move: true },
+    { left: 0.5, width: 0.5, translateX: [-0.5, 0], hideMultiplier: 1, move: true },
+  ],
+  slideInsideOutY: [
+    { height: 0.5, translateY: [0.5, 0], hideMultiplier: 1, move: true },
+    { top: 0.5, height: 0.5, translateY: [-0.5, 0], hideMultiplier: 1, move: true },
   ],
 
   /*center: [
