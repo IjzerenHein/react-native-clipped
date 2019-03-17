@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ClippedView } from './View';
 import type { ClippedAnimationName, ClippedAnimationType } from './Animations';
-import { resolveAnimation } from './Animations';
+import { resolveAnimation, isExitAnimation } from './Animations';
 
 export type ClippedTransitionProps = {
   style?: View.propTypes.style,
   children: any,
   // Animation props
   animation: ClippedAnimationName | ClippedAnimationType,
-  hideAnimation?: ClippedAnimationName | ClippedAnimationType,
   duration?: number,
   delay?: number,
   easing?: (t: number) => number,
@@ -41,7 +40,9 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
   static getDerivedStateFromProps(props: ClippedTransitionProps, state: StateType) {
     let newState: any = null;
 
-    const child = React.Children.only(props.children);
+    const child = isExitAnimation(props.animation)
+      ? undefined
+      : React.Children.only(props.children);
 
     if (!child && state.child) {
       newState = newState || {};
@@ -64,7 +65,6 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
       style,
       // Animation props
       animation,
-      hideAnimation,
       duration, // eslint-disable-line
       delay, // eslint-disable-line
       easing, // eslint-disable-line
@@ -78,21 +78,22 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
     const { child, prevChildren } = this.state;
     const children = child ? [...prevChildren, child] : prevChildren;
     const anim = resolveAnimation(animation);
-    const hideAnim = hideAnimation ? resolveAnimation(hideAnimation) : undefined;
+    const exit = isExitAnimation(animation);
     return (
       <View style={style} {...otherProps}>
         {React.Children.map(children, child => {
           const isHiding = child !== this.state.child;
+          if (!isHiding && exit) return null;
           return (
             <ClippedView
               key={child.key}
-              style={isHiding ? StyleSheet.absoluteFill : undefined}
-              animation={isHiding ? hideAnim : anim}
+              style={isHiding && !exit ? StyleSheet.absoluteFill : undefined}
+              animation={isHiding ? (exit ? anim : undefined) : anim}
               duration={duration}
               delay={delay}
               easing={easing}
               useNativeDriver={useNativeDriver}
-              onAnimationEnd={isHiding ? undefined : this.onAnimationEnd}
+              onAnimationEnd={isHiding && !exit ? undefined : this.onAnimationEnd}
               debug={debug}>
               {child}
             </ClippedView>

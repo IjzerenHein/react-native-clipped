@@ -22,13 +22,17 @@ export type ClippedAnimationName =
   | 'revealOutsideX'
   | 'revealOutsideY'
   | 'revealCenter'
-  | 'conceilLeft'
-  | 'conceilRight'
-  | 'conceilUp'
-  | 'conceilDown'
-  | 'conceilOutsideX'
-  | 'conceilOutsideY'
-  | 'conceilCenter'
+  | 'concealLeft'
+  | 'concealRight'
+  | 'concealUp'
+  | 'concealDown'
+  | 'concealOutsideX'
+  | 'concealOutsideY'
+  | 'concealCenter'
+  | 'concealLeftUp'
+  | 'concealRightUp'
+  | 'concealLeftDown'
+  | 'concealRightDown'
   | 'slideInLeft'
   | 'slideInRight'
   | 'slideInUp'
@@ -55,49 +59,60 @@ export type ClippedAnimationType = any;
 export type ClippedAnimation = ClippedAnimationName | ClippedAnimationType;
 
 export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType } = {
-  // Reveal
   revealLeft: [{ translateX: [1, 0] }],
-  revealLeftUp: [{ translateX: [1, 0], translateY: [1, 0] }],
-  revealLeftDown: [{ translateX: [1, 0], translateY: [-1, 0] }],
+  concealLeft: [{ exit: true, translateX: [0, -1] }],
   revealRight: [{ translateX: [-1, 0] }],
-  revealRightUp: [{ translateX: [-1, 0], translateY: [1, 0] }],
-  revealRightDown: [{ translateX: [-1, 0], translateY: [-1, 0] }],
+  concealRight: [{ exit: true, translateX: [0, 1] }],
   revealUp: [{ translateY: [1, 0] }],
+  concealUp: [{ exit: true, translateY: [0, -1] }],
   revealDown: [{ translateY: [-1, 0] }],
+  concealDown: [{ exit: true, translateY: [0, 1] }],
+
   revealCenter: [{ scaleX: [0.001, 1], scaleY: [0.001, 1] }],
+  concealCenter: [{ exit: true, scaleX: [1, 0.001], scaleY: [1, 0.001] }],
   revealOutsideX: [
     { width: 0.5, translateX: [-0.5, 0] },
     { left: 0.5, width: 0.5, translateX: [0.5, 0] },
+  ],
+  concealOutsideX: [
+    { exit: true, width: 0.5, translateX: [0, -0.5] },
+    { left: 0.5, width: 0.5, translateX: [0, 0.5] },
   ],
   revealOutsideY: [
     { height: 0.5, translateY: [-0.5, 0] },
     { top: 0.5, height: 0.5, translateY: [0.5, 0] },
   ],
-
-  // Conceil
-  conceilLeft: [{ exit: true, translateX: [0, -1] }],
-  conceilRight: [{ exit: true, translateX: [0, 1] }],
-  conceilUp: [{ exit: true, translateY: [0, -1] }],
-  conceilDown: [{ exit: true, translateY: [0, 1] }],
-  conceilCenter: [{ exit: true, scaleX: [1, 0.001], scaleY: [1, 0.001] }],
-  conceilOutsideX: [
-    { exit: true, width: 0.5, translateX: [0, -0.5] },
-    { left: 0.5, width: 0.5, translateX: [0, 0.5] },
-  ],
-  conceilOutsideY: [
+  concealOutsideY: [
     { exit: true, height: 0.5, translateY: [0, -0.5] },
     { top: 0.5, height: 0.5, translateY: [0, 0.5] },
   ],
 
+  revealLeftUp: [{ translateX: [1, 0], translateY: [1, 0] }],
+  concealLeftUp: [{ exit: true, translateX: [0, -1], translateY: [0, -1] }],
+  revealLeftDown: [{ translateX: [1, 0], translateY: [-1, 0] }],
+  concealLeftDown: [{ exit: true, translateX: [0, -1], translateY: [0, 1] }],
+  revealRightUp: [{ translateX: [-1, 0], translateY: [1, 0] }],
+  concealRightUp: [{ exit: true, translateX: [0, 1], translateY: [0, -1] }],
+  revealRightDown: [{ translateX: [-1, 0], translateY: [-1, 0] }],
+  concealRightDown: [{ exit: true, translateX: [0, 1], translateY: [0, 1] }],
+
   // Slide in
   slideInLeft: [{ translateX: [1, 0], move: true }],
+  slideOutLeft: [{ exit: true, translateX: [0, -1], move: true }],
   slideInRight: [{ translateX: [-1, 0], move: true }],
+  slideOutRight: [{ exit: true, translateX: [0, 1], move: true }],
   slideInUp: [{ translateY: [1, 0], move: true }],
+  slideOutUp: [{ exit: true, translateY: [0, -1], move: true }],
   slideInDown: [{ translateY: [-1, 0], move: true }],
+  slideOutDown: [{ exit: true, translateY: [0, 1], move: true }],
   slideInLeftUp: [{ translateX: [1, 0], translateY: [1, 0], move: true }],
+  slideOutLeftUp: [{ exit: true, translateX: [0, -1], translateY: [0, -1], move: true }],
   slideInLeftDown: [{ translateX: [1, 0], translateY: [-1, 0], move: true }],
+  slideOutLeftDown: [{ exit: true, translateX: [0, -1], translateY: [0, 1], move: true }],
   slideInRightUp: [{ translateX: [-1, 0], translateY: [1, 0], move: true }],
+  slideOutRightUp: [{ exit: true, translateX: [0, 1], translateY: [0, -1], move: true }],
   slideInRightDown: [{ translateX: [-1, 0], translateY: [-1, 0], move: true }],
+  slideOutRightDown: [{ exit: true, translateX: [0, 1], translateY: [0, 1], move: true }],
   slideInCenterX: [
     { width: 0.5, translateX: [0.5, 0], move: true },
     { left: 0.5, width: 0.5, translateX: [-0.5, 0], move: true },
@@ -122,14 +137,7 @@ export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType }
   ],
 
   // Slide out
-  slideOutLeft: [{ exit: true, translateX: [0, -1], move: true }],
-  slideOutRight: [{ exit: true, translateX: [0, 1], move: true }],
-  slideOutUp: [{ exit: true, translateY: [0, -1], move: true }],
-  slideOutDown: [{ exit: true, translateY: [0, 1], move: true }],
-  slideOutLeftUp: [{ exit: true, translateX: [0, -1], translateY: [0, -1], move: true }],
-  slideOutLeftDown: [{ exit: true, translateX: [0, -1], translateY: [0, 1], move: true }],
-  slideOutRightUp: [{ exit: true, translateX: [0, 1], translateY: [0, -1], move: true }],
-  slideOutRightDown: [{ exit: true, translateX: [0, 1], translateY: [0, 1], move: true }],
+
   growTiles: [
     { width: 0.5, height: 0.5, scaleX: [0.001, 1], scaleY: [0.001, 1] },
     { width: 0.5, height: 0.5, left: 0.5, scaleX: [0.001, 1], scaleY: [0.001, 1] },

@@ -102,7 +102,7 @@ export const ClippedFragment = (props: PropsType) => {
 
   if (debug) {
     outerStyle.overflow = 'visible';
-    outerStyle.backgroundColor = 'rgba(0, 0, 255, 0.1)';
+    outerStyle.backgroundColor = 'rgba(0, 0, 255, 0.2)';
     outerStyle.borderColor = 'royalblue';
     outerStyle.borderWidth = 1;
     outerStyle.borderStyle = 'dashed';

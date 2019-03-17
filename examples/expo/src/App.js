@@ -5,7 +5,12 @@ import { Router, Scene, Tabs } from 'react-native-router-flux';
 import { Ionicons } from '@expo/vector-icons';
 import { StoreProvider } from './store';
 import { DebugButton, RunButton } from './components';
-import { ViewExamplesScreen, ViewExplorerScreen, ViewAnimationsScreen } from './view';
+import {
+  ViewExamplesScreen,
+  ViewExplorerScreen,
+  ViewAnimationsScreen,
+  ViewVideoScreen,
+} from './view';
 import { TransitionsScreen } from './transition';
 import { SeriesScreen } from './series';
 
@@ -29,7 +34,7 @@ const App = () => (
       <Tabs>
         <Scene
           key="viewExamples"
-          component={ViewExamplesScreen}
+          component={ViewVideoScreen}
           title="View Examples"
           tabBarLabel="View"
           icon={ViewIcon}
