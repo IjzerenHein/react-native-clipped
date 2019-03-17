@@ -33,6 +33,7 @@ export type ClippedAnimationName =
   | 'slideRightUp'
   | 'slideLeftDown'
   | 'slideRightDown'
+  | 'slideInsideOut'
   | 'slideInsideOutX'
   | 'slideInsideOutY';
 
@@ -82,6 +83,44 @@ export const ClippedAnimations: { [ClippedAnimationName]: ClippedAnimationType }
   slideLeftDown: [{ translateX: [1, 0], translateY: [-1, 0], move: true }],
   slideRightUp: [{ translateX: [-1, 0], translateY: [1, 0], move: true }],
   slideRightDown: [{ translateX: [-1, 0], translateY: [-1, 0], move: true }],
+  slideInsideOut: [
+    {
+      width: 0.5,
+      height: 0.5,
+      translateX: [0.5, 0],
+      translateY: [0.5, 0],
+      hideMultiplier: 1,
+      move: true,
+    },
+    {
+      left: 0.5,
+      width: 0.5,
+      height: 0.5,
+      translateX: [-0.5, 0],
+      translateY: [0.5, 0],
+      hideMultiplier: 1,
+      move: true,
+    },
+    {
+      width: 0.5,
+      height: 0.5,
+      top: 0.5,
+      translateX: [0.5, 0],
+      translateY: [-0.5, 0],
+      hideMultiplier: 1,
+      move: true,
+    },
+    {
+      left: 0.5,
+      top: 0.5,
+      width: 0.5,
+      height: 0.5,
+      translateX: [-0.5, 0],
+      translateY: [-0.5, 0],
+      hideMultiplier: 1,
+      move: true,
+    },
+  ],
   slideInsideOutX: [
     { width: 0.5, translateX: [0.5, 0], hideMultiplier: 1, move: true },
     { left: 0.5, width: 0.5, translateX: [-0.5, 0], hideMultiplier: 1, move: true },

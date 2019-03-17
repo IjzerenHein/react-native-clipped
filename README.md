@@ -15,7 +15,7 @@ Clipping effects and animations for react-native  🍠🥒🍕
   - [Documentation](#documentation)
     - [Clipped.View](#clippedview)
     - [Props](#props)
-    - [Transitions](#transitions)
+    - [Anim ations](#anim-ations)
 
 ## Usage
 
@@ -29,7 +29,7 @@ $ yarn add react-native-clipped
 import * as Clipped from 'react-native-clipped';
 
 // Animate a component using a clipped slide-in effect
-<Clipped.View animation='slideInLeft'>
+<Clipped.View animation='slideLeft'>
   <Text>Hi there</Text>
 </Clipped.View>
 
@@ -56,9 +56,26 @@ import * as Clipped from 'react-native-clipped';
 | `animValue`       | `Animated.Value` |         | Optional animated value to control the animation. Useful for linking the animation to gestures or making the animation part of a larger compound animation. The value should animate from `0` to `1` |
 |                   |
 
-### Transitions
+### Anim ations
 
-The following transition functions are available out of the box.
+The following animations are available out of the box.
+
+| Clip             | Slide             |
+| ---------------- | ----------------- |
+| `clipLeft`       | `slideLeft`       |
+| `clipRight`      | `slideRight`      |
+| `clipUp`         | `slideUp`         |
+| `clipDown`       | `slideDown`       |
+| `clipLeftUp`     | `slideLeftUp`     |
+| `clipLeftDown`   | `slideLeftDown`   |
+| `clipRightUp`    | `slideRightUp`    |
+| `clipRightDown`  | `slideRightDown`  |
+| `clipInsideOut`  | 'slideInsideOut`  |
+| `clipInsideOutX` | `slideInsideOutX` |
+| `clipInsideOutY` | `slideInsideOutY` |
+| `clipOutsideIn`  |                   |
+| `clipOutsideInX` |                   |
+| `clipOutsideInY` |                   |
 
 
 ## License <!-- omit in toc -->
