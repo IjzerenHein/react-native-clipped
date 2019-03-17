@@ -41,7 +41,7 @@ export const ViewVideoExample = storeObserver(
   class ViewVideoExample extends Component<PropsType, StateType> {
     static defaultProps = {
       animations: Clipped.Animations,
-      //animations: ['scaleCenter'],
+      //animations: ['slideOutside'],
     };
     state = { index: 0, hide: false };
     render() {
@@ -52,6 +52,7 @@ export const ViewVideoExample = storeObserver(
         <Clipped.Transition
           animation={animation}
           move={move}
+          duration={2000}
           debug={store.debug}
           onTransitionEnd={this.onTransitionEnd}>
           {!hide ? (

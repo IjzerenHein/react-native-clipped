@@ -79,15 +79,6 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
 
     const { child, prevChildren } = this.state;
     const children = child ? [...prevChildren, child] : prevChildren;
-    console.log(
-      'TRANSITION.render, children: ',
-      children,
-      ', visibleChild: ',
-      child,
-      ', animation: ',
-      animation
-    );
-
     return (
       <View style={style} {...otherProps}>
         {React.Children.map(children, child => {
