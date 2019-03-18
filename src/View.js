@@ -26,6 +26,7 @@ export type ClippedViewProps = {
   animValue?: any,
   hide?: boolean,
   invert?: boolean,
+  lockSize?: boolean,
   //fade: boolean,
   duration?: number,
   delay?: number,
@@ -332,6 +333,7 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       // Animation props
       animation, // eslint-disable-line
       hide, // eslint-disable-line
+      lockSize, // eslint-disable-line
       invert, // eslint-disable-line
       duration, // eslint-disable-line
       delay, // eslint-disable-line
@@ -345,7 +347,10 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
     } = this.props;
     const { width, height, anim } = this.state;
     return (
-      <View style={style} onLayout={this.onLayout} {...otherProps}>
+      <View
+        style={[style, width && height && lockSize ? { width, height } : undefined]}
+        onLayout={this.onLayout}
+        {...otherProps}>
         <View style={{ opacity: 0 }} collapsable={false}>
           {children}
         </View>

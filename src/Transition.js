@@ -4,6 +4,14 @@ import { StyleSheet, View } from 'react-native';
 import { ClippedView } from './View';
 import type { ClippedAnimationName, ClippedAnimationType } from './Animations';
 
+const styles = StyleSheet.create({
+  hide: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+  },
+});
+
 export type ClippedTransitionProps = {
   style?: View.propTypes.style,
   children: any,
@@ -19,8 +27,6 @@ export type ClippedTransitionProps = {
 };
 
 type StateType = {
-  width: ?number,
-  height: ?number,
   child: any,
   prevChildren: Array<any>,
 };
@@ -29,8 +35,6 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
   constructor(props: ClippedTransitionProps) {
     super(props);
     this.state = {
-      width: undefined,
-      height: undefined,
       child: React.Children.only(props.children),
       prevChildren: [],
     };
@@ -82,9 +86,10 @@ export class ClippedTransition extends Component<ClippedTransitionProps, StateTy
           return (
             <ClippedView
               key={child.key}
-              style={isHiding && this.state.child ? StyleSheet.absoluteFill : undefined}
+              style={isHiding && this.state.child ? styles.hide : undefined}
               animation={animation}
               hide={isHiding}
+              lockSize={isHiding}
               duration={duration}
               delay={delay}
               easing={easing}
