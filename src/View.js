@@ -336,6 +336,7 @@ export class ClippedView extends Component<ClippedViewProps, StateType> {
       duration, // eslint-disable-line
       delay, // eslint-disable-line
       easing, // eslint-disable-line
+      animValue, // eslint-disable-line
       useNativeDriver, // eslint-disable-line
       onAnimationEnd, // eslint-disable-line
       // Debug props
