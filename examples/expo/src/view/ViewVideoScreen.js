@@ -53,16 +53,16 @@ export const ViewVideoScreen = storeObserver(
             resizeMode="cover"
           />
           <View style={styles.content1}>
-            <ViewVideoExample solid animations={ANIMATIONS} />
+            <ViewVideoExample solid animations={ANIMATIONS} immediate />
           </View>
           <View style={styles.content2}>
-            <ViewVideoExample animations={ANIMATIONS} />
+            <ViewVideoExample animations={ANIMATIONS} immediate />
           </View>
           <View style={styles.content3}>
-            <ViewVideoExample solid animations={SLIDE_ANIMATIONS} />
+            <ViewVideoExample solid animations={SLIDE_ANIMATIONS} immediate />
           </View>
           <View style={styles.content4}>
-            <ViewVideoExample animations={SLIDE_ANIMATIONS} />
+            <ViewVideoExample animations={SLIDE_ANIMATIONS} immediate />
           </View>
         </View>
       );

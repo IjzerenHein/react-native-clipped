@@ -30,6 +30,7 @@ type PropsType = {
   store: Store,
   animations: Array<Animation>,
   solid?: boolean,
+  immediate?: boolean,
 };
 type StateType = {
   index: number,
@@ -65,9 +66,10 @@ export const ViewVideoExample = storeObserver(
     }
 
     onTransitionEnd = () => {
+      const { immediate } = this.props;
       this.setState({
-        hide: !this.state.hide,
-        index: this.state.index + (this.state.hide ? 1 : 0),
+        hide: immediate ? false : !this.state.hide,
+        index: this.state.index + (this.state.hide || immediate ? 1 : 0),
       });
     };
   }
