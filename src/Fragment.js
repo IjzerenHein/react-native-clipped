@@ -48,7 +48,7 @@ export const ClippedFragment = (props: PropsType) => {
     perspective,
   } = props;
   const originalWidth = props.originalWidth === undefined ? width : props.originalWidth;
-  const originalHeight = props.originalHeight === undefined ? width : props.originalHeight;
+  const originalHeight = props.originalHeight === undefined ? height : props.originalHeight;
   const fragmentStyle: any = {
     position: 'absolute',
     left,
